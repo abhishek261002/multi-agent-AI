@@ -16,10 +16,6 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-    },
-    password: {
-        type: String,
-        required: true
     }
 }, {timestamps: true});
 
