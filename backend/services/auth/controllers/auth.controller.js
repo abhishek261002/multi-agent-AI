@@ -40,10 +40,10 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        const sessionId = req.cookies?.session;
+        const sessionId = req.cookies?.sessionId;
         console.log("Session ID from cookie:", sessionId);
         await redis.del(`session-${sessionId}`);
-        res.clearCookie("session");
+        res.clearCookie("sessionId");
         return res.status(200).json({ message: "Logout successful" });
     } catch (error) {
         console.error("Error occurred while logging out:", error);

@@ -3,10 +3,14 @@ import {FaGoogle} from 'react-icons/fa'
 import { signInWithPopup } from 'firebase/auth'
 import {auth, googleProvider} from '../../utils/firebase.js'
 import api from '../../utils/axios.js'
+import { useSelector } from 'react-redux'
 function Home() {
+  
+  const {userData} = useSelector((state) => state.user);
+  console.log(userData, "from react-redux");
   const handleLogin = async (token) => {
     try{
-      const response = await api.post("/api/auth/login", { token });
+      const response = await api.post("/auth/login", { token });
       console.log(response.data);
     }
     catch (error) {
@@ -15,15 +19,18 @@ function Home() {
   }
 
   const googleLogin = async()=>{
-    const data = await signInWithPopup(auth, googleProvider);
-    const token = await data.user.getIdToken(); 
-    console.log(token);
-    await handleLogin(token);
-    console.log(data);
+    try {
+      const data = await signInWithPopup(auth, googleProvider);
+      const token = await data.user.getIdToken();
+      console.log(token);
+      await handleLogin(token);
+    } catch (error) {
+      console.error("Google login failed", error);
+    }
   }
    return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="w-[340px] bg-[#13151c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5">
+      {!userData &&  <div className="w-[340px] bg-[#13151c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5">
 
             <div className="flex flex-col gap-1">
               <h2 className="text-[17px] font-semibold text-slate-100 tracking-tight">Welcome to CortexAI</h2>
@@ -38,7 +45,8 @@ function Home() {
   Continue with Google
 </button>
 
-          </div>
+          </div>}
+         
         </div>
   )
 }

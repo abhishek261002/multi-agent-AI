@@ -1,3 +1,4 @@
+import redis from "../../shared/redis/redis.js"
 const protect = async(req, res, next) => {
     try{
         const sessionId = req.cookies.sessionId

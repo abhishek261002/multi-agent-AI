@@ -1,11 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import router from "./routes/auth.route.js";
+import router from "../auth/routes/chat.route.js";
 dotenv.config(); 
 
 const parsedPort = Number.parseInt(process.env.PORT ?? "", 10);
-const port = Number.isFinite(parsedPort) ? parsedPort : 8001; // Fallback port just in case
+const port = Number.isFinite(parsedPort) ? parsedPort : 8002; // Fallback port just in case
 const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
 const app = express();
 
@@ -23,9 +23,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json()); // Middleware to parse JSON bodies
-app.use(router) 
+app.use("/", router);
 app.get("/", (req, res) => {
-    res.json({ message: "hello from auth" });
+    res.json({ message: "hello from chat" });
 });
 
 const startServer = async () => {
@@ -33,10 +33,10 @@ const startServer = async () => {
         await connectDB();
 
         app.listen(port, () => {
-            console.log(`AUTH STARTED ON PORT: ${port}`);
+            console.log(`CHAT STARTED ON PORT: ${port}`);
         });
     } catch (error) {
-        console.error("Failed to start auth service:", error.message);
+        console.error("Failed to start chat service:", error.message);
 
         if (error.cause) {
             console.error("MongoDB cause:", error.cause);
