@@ -3,7 +3,7 @@ import api from '../../utils/axios.js'
 
 async function sendMessage(payload) {
   try {
-    const {data} = api.post("/agent/chat",payload)
+    const {data} =await api.post("/agent/chat",payload)
     console.log(data);
     return data;
   } catch (error) {

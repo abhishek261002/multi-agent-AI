@@ -20,14 +20,15 @@ const dispatch = useDispatch()
 useEffect(()=>{
   const getMsg = async()=>{
     if(selectedConversation){
+     if(selectedConversation.title =="New Chat")  return;
       const data = await getMessages(selectedConversation?._id);
       dispatch(setMessages(data))
     }
   }
   getMsg();
-},[selectedConversation])
+},[selectedConversation?._id])
   return (
-    <div className="flex-1 flex flex-col min-w-0">
+    <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
 
       <Navbar />
 

@@ -18,9 +18,10 @@ import { addMessage, setIsLoading, setMessages } from "../redux/messageSlice.js"
 import { Mic, MicOff } from "lucide-react";
 import { useEffect } from "react";
 import { createConversation } from "../features/createConversation.js";
-import { setSelectedConversations , setConvTitle} from "../redux/conversationSlice.js";
+import { setSelectedConversations , setConvTitle, addConversations} from "../redux/conversationSlice.js";
 import { useRef } from "react";
 import sendMessage from "../features/sendMessage.js";
+import { updateConversation } from "../features/updateConversation.js";
 
 export default function ChatInput({ setBanner }) {
   const [selectedAgent, setSelectedAgent] = useState("auto");
@@ -143,12 +144,25 @@ export default function ChatInput({ setBanner }) {
     }
   };
   const handleSendMessage = async () => {
+
     const promptText = value.trim();
     if (!promptText) return;
-
+    let conversation = selectedConversation;
+    if(!conversation){
+      const conv = await createConversation()
+      dispatch(setSelectedConversations(conv));
+      dispatch(addConversations(conv));
+      conversation = conv;
+    };
+    if(conversation?.title==="New Chat"){
+      await updateConversation({id: conversation._id, title: value.trim()});
+      dispatch(setConvTitle({conversationId: conversation._id,
+          title: value.slice(0,40)
+      }))
+    }
     const payload = {
         prompt: promptText,
-        conversationId: selectedConversation?._id
+        conversationId: conversation?._id
     };
 
     // Use addMessage to push the user prompt directly to Redux (handles immutability under the hood!)

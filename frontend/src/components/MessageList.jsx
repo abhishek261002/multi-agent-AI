@@ -84,7 +84,7 @@ function GeneratingIndicator() {
 export default function MessageList() {
 
   const bottomRef = useRef(null);
-  const { messages } = useSelector(state => state.message);
+  const { messages , isLoading } = useSelector(state => state.message);
   const { selectedConversation } = useSelector(state => state.conversation);
   const dispatch = useDispatch();
 useEffect(() => {
@@ -165,7 +165,7 @@ useEffect(() => {
             </motion.div>
           ))}
 
-          {/* {isLoading && (
+          {isLoading && (
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ useEffect(() => {
             >
               <GeneratingIndicator />
             </motion.div>
-          )} */}
+          )}
         
         </>
       )}
