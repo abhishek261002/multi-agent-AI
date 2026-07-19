@@ -4,6 +4,8 @@ import { signInWithPopup } from 'firebase/auth'
 import {auth, googleProvider} from '../../utils/firebase.js'
 import api from '../../utils/axios.js'
 import { useSelector } from 'react-redux'
+import Sidebar from '../components/Sidebar.jsx'
+import ChatArea from '../components/ChatArea.jsx'
 function Home() {
   
   const {userData} = useSelector((state) => state.user);
@@ -30,6 +32,8 @@ function Home() {
   }
    return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      <Sidebar />
+      <ChatArea />
       {!userData &&  <div className="w-[340px] bg-[#13151c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5">
 
             <div className="flex flex-col gap-1">

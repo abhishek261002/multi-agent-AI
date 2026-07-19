@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import router from "../auth/routes/chat.route.js";
+import router from "./routes/chat.route.js";
 dotenv.config(); 
 
 const parsedPort = Number.parseInt(process.env.PORT ?? "", 10);

@@ -6,6 +6,7 @@ import cors from "cors";
 import protect from "./middlewares/auth.middleware.js";
 import {getCurrentUser} from "./controllers/user.controller.js";
 import { proxyWithHeader } from "./utils/proxyWithHeader.js";
+import morgan from "morgan";
 dotenv.config();
 
 // Parse the port defensively so a stray character in .env does not break startup.
@@ -20,7 +21,7 @@ app.use(cors({
     origin: frontendUrl,
     credentials: true
 }));
-
+app.use(morgan("dev"))
 app.use(cookieParser());
 
 // Proxy requests to Auth service and strip the /auth prefix.

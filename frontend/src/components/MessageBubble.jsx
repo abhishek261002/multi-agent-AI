@@ -34,7 +34,7 @@ const markdown = (content || "")
         ${
           isUser
             ? "bg-gradient-to-br from-indigo-500 to-violet-700 text-white rounded-tr-sm"
-            : " text-slate-200 rounded-tl-sm"
+            : "bg-white/[0.14] border border-white/[0.07] text-slate-200 rounded-tl-sm"
         }`}
       >
         {images.length > 0 && (

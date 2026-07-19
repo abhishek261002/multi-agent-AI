@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import router from "./routes/agent.route.js";
 dotenv.config(); 
 
 const parsedPort = Number.parseInt(process.env.PORT ?? "", 10);
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json()); // Middleware to parse JSON bodies
+app.use("/", router)
 app.get("/", (req, res) => {
     res.json({ message: "hello from agents" });
 });
